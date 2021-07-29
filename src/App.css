@@ -1,0 +1,22 @@
+.navbar {
+  background-color: black;
+  color: white;
+  display: flex;
+  padding: 0 12px;
+  justify-content: space-between;
+  height: 64px;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  margin-left: 11px;
+  background: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.active {
+  background-color: #ffa8a8;
+}
