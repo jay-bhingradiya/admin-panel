@@ -1,7 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
+import AdminContext from "../../store/admin-context";
+import ChangePassword from "./ChangePassword";
 
 const Register = () => {
+  const adminCtx = useContext(AdminContext);
   const [showFirstPage, setShowFirstPage] = useState(true);
+  const [counter, setCounter] = useState(0);
+
+  const [errors, setErrors] = useState([]);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -86,6 +92,12 @@ const Register = () => {
     if (formData.password !== formData.confirmPassword)
       error.push("password didn't match ");
 
+    console.log(errors);
+    // setErrors({
+    //   ...errors,
+    //   general: [...errors.general, "password didn't match "],
+    // });
+
     formData.education.map((data, index) => {
       for (let [key, value] of Object.entries(data)) {
         if (value === "") {
@@ -95,149 +107,190 @@ const Register = () => {
       }
     });
 
-    error.length ? console.log(error) : console.log(formData);
+    if (error.length) {
+      console.log(error);
+      setErrors(error);
+      setTimeout(() => setErrors([]), 3000);
+      return;
+    }
+
+    formData["id"] = Math.random();
+    adminCtx.register(formData);
   };
+
+  const errorComponent = (
+    <ul>
+      {errors.map((error) => (
+        <li>{error}</li>
+      ))}
+    </ul>
+  );
 
   return (
     <Fragment>
       <div className="register-backdrop">
-        <form className="register-form">
-          <div className="page-1" style={userDetails}>
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                value={userData.name}
-                onChange={onUserChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                value={userData.email}
-                onChange={onUserChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>gender</label>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                onChange={onUserChange}
-                required
-              />
-              <label>Male</label>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                onChange={onUserChange}
-              />
-              <label>Female</label>
-            </div>
-            <div className="form-group">
-              <label>Phone Number</label>
-              <input
-                type="number"
-                name="phone"
-                value={userData.phone}
-                onChange={onUserChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>password</label>
-              <input
-                type="password"
-                name="password"
-                value={userData.password}
-                onChange={onUserChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={userData.confirmPassword}
-                onChange={onUserChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="page-2" style={educationDetails}>
-            {education &&
-              education.length &&
-              education.map((data, key) => (
-                <div className="education" key={key}>
-                  <div className="form-group">
-                    <label>Institute</label>
-                    <input
-                      type="text"
-                      name="institute"
-                      onChange={(e) => onEducationChange(e, key)}
-                      value={data.institute}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Course</label>
-                    <input
-                      type="text"
-                      name="course"
-                      onChange={(e) => onEducationChange(e, key)}
-                      value={data.course}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Percentage/CGPA</label>
-                    <input
-                      type="text"
-                      name="marks"
-                      onChange={(e) => onEducationChange(e, key)}
-                      value={data.marks}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>startDate</label>
-                    <input
-                      type="date"
-                      name="startDate"
-                      onChange={(e) => onEducationChange(e, key)}
-                      value={data.startDate}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>endDate</label>
-                    <input
-                      type="date"
-                      name="endDate"
-                      onChange={(e) => onEducationChange(e, key)}
-                      value={data.endDate}
-                    />
-                  </div>
-                  <button type="button" onClick={() => removeEdu(key)}>
-                    Remove
-                  </button>
-                </div>
-              ))}
-          </div>
-        </form>
+        <div className="register">
+          <form className="register-form">
+            <div className="page-1" style={userDetails}>
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="name"
+                  value={userData.name}
+                  onChange={onUserChange}
+                  required
+                />
+                <div className="error-div">{errors.name}</div>
+              </div>
 
-        {showFirstPage ? (
-          <button onClick={pageHandler}>Next</button>
-        ) : (
-          <button onClick={pageHandler}>Previous</button>
-        )}
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={onUserChange}
+                  required
+                />
+                <div className="error-div">{errors.email}</div>
+              </div>
+              <div className="form-group">
+                <label>gender</label>
+                <span>
+                  <input
+                    // className="form-input"
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    onChange={onUserChange}
+                    required
+                  />
+                  <span>Male</span>
+                  <input
+                    // className="form-input"
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    onChange={onUserChange}
+                  />
+                  <span>Female</span>
 
-        <button onClick={addEduHandler}>Add Education</button>
-        <button onClick={submitHandler}>Submit</button>
+                  {/* <spa className="error-div">{errors.email}</spa> */}
+                </span>
+              </div>
+              <div className="form-group">
+                <label>Phone Number</label>
+                <input
+                  className="form-input"
+                  type="number"
+                  name="phone"
+                  value={userData.phone}
+                  onChange={onUserChange}
+                  required
+                />
+                <div className="error-div">{errors.phone}</div>
+              </div>
+              <div className="form-group">
+                <label>password</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  name="password"
+                  value={userData.password}
+                  onChange={onUserChange}
+                  required
+                />
+                <div className="error-div">{errors.password}</div>
+              </div>
+              <div className="form-group">
+                <label>Confirm Password</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  name="confirmPassword"
+                  value={userData.confirmPassword}
+                  onChange={onUserChange}
+                  required
+                />
+                <div className="error-div">{errors.ChangePassword}</div>
+              </div>
+            </div>
+            <div className="page-2" style={educationDetails}>
+              {education &&
+                education.map((data, key) => (
+                  <div className="education" key={key}>
+                    <div className="form-group">
+                      <label>Institute</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        name="institute"
+                        onChange={(e) => onEducationChange(e, key)}
+                        value={data.institute}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Course</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        name="course"
+                        onChange={(e) => onEducationChange(e, key)}
+                        value={data.course}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Percentage/CGPA</label>
+                      <input
+                        className="form-input"
+                        type="text"
+                        name="marks"
+                        onChange={(e) => onEducationChange(e, key)}
+                        value={data.marks}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>startDate</label>
+                      <input
+                        className="form-input"
+                        type="date"
+                        name="startDate"
+                        onChange={(e) => onEducationChange(e, key)}
+                        value={data.startDate}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>endDate</label>
+                      <input
+                        className="form-input"
+                        type="date"
+                        name="endDate"
+                        onChange={(e) => onEducationChange(e, key)}
+                        value={data.endDate}
+                      />
+                    </div>
+                    <button type="button" onClick={() => removeEdu(key)}>
+                      Remove
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </form>
+          {errorComponent}
+          <div className="buttons">
+            {showFirstPage ? (
+              <button onClick={pageHandler}>Next</button>
+            ) : (
+              <button onClick={pageHandler}>Previous</button>
+            )}
+
+            <button onClick={addEduHandler}>Add Education</button>
+            <button onClick={submitHandler}>Submit</button>
+          </div>
+        </div>
       </div>
     </Fragment>
   );

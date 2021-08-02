@@ -4,19 +4,25 @@ import Layout from "./components/Layout/Layout";
 import { Route, Switch } from "react-router-dom";
 import routes from "./routes/routes";
 import Home from "./components/Home";
-import { useState } from "react";
+import EducationDetails from "./components/User/EducationDetails";
+import { Fragment, useContext, useState } from "react";
 import protectedRoute from "./routes/protectedRoute";
 import NotFound from "./components/NotFound";
+import AdminContext, { AdminProvider } from "./store/admin-context";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const adminCtx = useContext(AdminContext);
+  console.log(adminCtx.isLogin)
+  
   return (
-    <BrowserRouter>
+    <Fragment>
       <Layout />
-
+    
       <Switch>
         <Route path="/" component={Home} exact />
-        {isLogin
+        {/* <Route path="/education" component={EducationDetails} exact /> */}
+        
+        {adminCtx.isLogin
           ? protectedRoute.map((route, key) => {
               return (
                 <Route
@@ -37,7 +43,7 @@ function App() {
             })}
         <Route path="*" component={NotFound} exact />
       </Switch>
-    </BrowserRouter>
+    </Fragment>
   );
 }
 

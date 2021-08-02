@@ -1,22 +1,212 @@
 .navbar {
-  background-color: black;
+  background-color: #31282c;
   color: white;
-  display: flex;
   padding: 0 12px;
+}
+.logo h1 {
+  margin: 17px 10px;
+}
+
+.upper {
+  display: flex;
   justify-content: space-between;
-  height: 64px;
   align-items: center;
+}
+.lowwer {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.lowwer span:last-child {
+  margin-left: 20px;
+}
+.lowwer span:first-child {
+  cursor: pointer;
 }
 
 .nav-link {
   text-decoration: none;
   margin-left: 11px;
-  background: white;
   padding: 5px 10px;
   border-radius: 3px;
   font-weight: 500;
+  border: 1px solid white;
+  color: white;
+}
+.active {
+  background-color: white;
+  color: #31282c;
 }
 
-.active {
-  background-color: #ffa8a8;
+/* Education Modal */
+
+.backdrop {
+  background-color: #000000a6;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px 40px;
+  border-radius: 11px;
+}
+
+.forModal {
+  position: relative;
+}
+
+/* Form */
+
+.form-input {
+  font-size: 16px;
+  padding: 5px 4px;
+  outline: none;
+  border: 1px solid #31282c;
+  /* width: 65%; */
+  width: 100%;
+}
+.register {
+  width: 500px;
+  border: 1px solid black;
+  margin: 40px auto;
+  padding: 24px 27px;
+  box-shadow: 6px 7px 18px #bfb9b9;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+}
+
+.register-form label {
+  width: 35%;
+  display: inline-block;
+}
+
+.buttons {
+  display: flex;
+}
+.buttons button,
+.submit-btn {
+  width: 100%;
+  margin: 12px 5px 0 5px;
+  padding: 8px 0;
+  background-color: #5f4751e0;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.education {
+  border: 1px solid black;
+  padding: 13px 23px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+.education button,
+.btn-danger {
+  display: block;
+  margin: 0 auto;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #e61111;
+  border: 1px solid transparent;
+  color: white;
+  border-radius: 5px;
+}
+
+.btn-light {
+  background-color: white;
+  padding: 5px 10px;
+  color: #5f4751e0;
+  border: 1.5px solid #5f4751e0;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-dark {
+  padding: 5px 10px;
+  background-color: #5f4751e0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ml-5 {
+  margin-left: 10px;
+}
+
+table {
+  margin: 10px auto;
+}
+td,
+th {
+  padding: 10px 18px;
+  text-align: center;
+  border: 1px solid #5f4751e0;
+}
+
+.table-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lowwer span {
+  font-size: 14px;
+}
+
+.error-div {
+  color: red;
+  margin: 2px 0 1px 0;
+  font-size: 12px;
+}
+
+.input-container {
+  width: 65%;
+}
+
+.form-group {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  grid-template-columns: 35% 65%;
+  width: 100%;
+}
+
+.form-group label {
+  grid-row: 1 / span 2;
+  width: 100%;
+  align-self: flex-start;
+}
+
+.error-div {
+  color: red;
+  margin: 2px 0 1px 0;
+  font-size: 12px;
+}
+
+.form-input {
+  font-size: 16px;
+  padding: 5px 4px;
+  outline: none;
+  border: 1px solid #31282c;
 }

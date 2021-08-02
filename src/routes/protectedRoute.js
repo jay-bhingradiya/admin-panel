@@ -1,7 +1,9 @@
-import ChangePassword from "../components/User/ChangePassword";
+import EducationDetails from "../components/User/EducationDetails";
+import Profile from "../components/User/Profile";
 
 const protectedRoute = [
-  { path: "/change-password", Component: ChangePassword },
+  { path: "/personal-details", Component: Profile },
+  { path: "/education-details", Component: EducationDetails },
 ];
 
 export default protectedRoute;

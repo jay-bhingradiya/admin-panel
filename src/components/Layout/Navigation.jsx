@@ -1,25 +1,41 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import AdminContext from "../../store/admin-context";
+import ChangePassword from "../User/ChangePassword";
 
 const Navigation = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const adminCtx = useContext(AdminContext);
+  const logoutHandler = () => adminCtx.logout();
+
+  const [passModal, setPassModal] = useState(false);
+
+  const openModal = () => setPassModal(true);
+  const closeModal = () => setPassModal(false);
 
   const protectedLinks = (
     <Fragment>
       <NavLink
-        to="/change-password"
+        to="/personal-details"
         activeClassName="active"
         className="nav-link"
       >
-        Change Password
+        Personal Details
       </NavLink>
       <NavLink
-        to="/change-password"
+        to="/education-details"
         activeClassName="active"
         className="nav-link"
       >
-        Logout
+        Education Details
       </NavLink>
+
+      <div
+        style={{ display: "inline-block", cursor: "pointer" }}
+        className="nav-link"
+        onClick={logoutHandler}
+      >
+        Logout
+      </div>
     </Fragment>
   );
 
@@ -35,17 +51,29 @@ const Navigation = () => {
   );
 
   return (
-    <nav className="navbar">
-      <div className="logo">
-        <h1>Admin Panel</h1>
-      </div>
-      <div className="nav-links">
-        <NavLink exact to="/" activeClassName="active" className="nav-link">
-          Home
-        </NavLink>
-        {isLogin ? protectedLinks : links}
-      </div>
-    </nav>
+    <Fragment>
+      {passModal && <ChangePassword onClose={closeModal} />}
+      <nav className="navbar">
+        <div className="upper">
+          <div className="logo">
+            <h1>Admin Panel</h1>
+          </div>
+
+          <div className="nav-links">
+            <NavLink exact to="/" activeClassName="active" className="nav-link">
+              Home
+            </NavLink>
+            {adminCtx.isLogin ? protectedLinks : links}
+          </div>
+        </div>
+        {adminCtx.isLogin && (
+          <div className="lowwer">
+            <span onClick={openModal}>Change Password</span>
+            <span>{`Logged in as ${adminCtx.currentUser.email}`}</span>
+          </div>
+        )}
+      </nav>
+    </Fragment>
   );
 };
 
