@@ -1,11 +1,9 @@
 import React, { Fragment, useContext, useState } from "react";
 import AdminContext from "../../store/admin-context";
-import ChangePassword from "./ChangePassword";
 
 const Register = () => {
   const adminCtx = useContext(AdminContext);
   const [showFirstPage, setShowFirstPage] = useState(true);
-  const [counter, setCounter] = useState(0);
 
   const [errors, setErrors] = useState([]);
   const [userData, setUserData] = useState({
@@ -93,12 +91,8 @@ const Register = () => {
       error.push("password didn't match ");
 
     console.log(errors);
-    // setErrors({
-    //   ...errors,
-    //   general: [...errors.general, "password didn't match "],
-    // });
 
-    formData.education.map((data, index) => {
+    formData.education.forEach((data, index) => {
       for (let [key, value] of Object.entries(data)) {
         if (value === "") {
           error.push(`Please fill data in education-${index + 1}`);

@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import AdminContext from "../../store/admin-context";
 
 const Login = () => {
-  const history = useHistory;
   const [userData, setUserData] = useState({
     email: "",
     password: "",
