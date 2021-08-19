@@ -60,6 +60,14 @@ const Navigation = () => {
           </div>
 
           <div className="nav-links">
+            <NavLink
+              exact
+              to="/dropzone"
+              activeClassName="active"
+              className="nav-link"
+            >
+              Dropzone
+            </NavLink>
             <NavLink exact to="/" activeClassName="active" className="nav-link">
               Home
             </NavLink>

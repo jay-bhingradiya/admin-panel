@@ -1,16 +1,16 @@
 import "./App.css";
-import { Fragment, useContext } from "react";
-import { Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
+import { Route, Switch } from "react-router-dom";
 import routes from "./routes/routes";
 import Home from "./components/Home";
+
+import { Fragment, useContext } from "react";
 import protectedRoute from "./routes/protectedRoute";
 import NotFound from "./components/NotFound";
 import AdminContext from "./store/admin-context";
 
 function App() {
   const adminCtx = useContext(AdminContext);
-  console.log(adminCtx.isLogin);
 
   return (
     <Fragment>
@@ -18,7 +18,6 @@ function App() {
 
       <Switch>
         <Route path="/" component={Home} exact />
-        {/* <Route path="/education" component={EducationDetails} exact /> */}
 
         {adminCtx.isLogin
           ? protectedRoute.map((route, key) => {

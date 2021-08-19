@@ -210,3 +210,18 @@ th {
   outline: none;
   border: 1px solid #31282c;
 }
+
+.dropzone-area {
+  border: 1px solid black;
+  /* width: 90%; */
+  margin: 11px auto;
+  text-align: center;
+  background: #ddddef;
+}
+
+.dropzone-form {
+  border: 1px solid black;
+  width: 50%;
+  margin: 10% auto;
+  padding: 20px;
+}
