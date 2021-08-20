@@ -54,6 +54,12 @@ const Register = () => {
 
   const removeEdu = (id) => {
     const newList = [...education];
+
+    if (newList.length <= 1) {
+      alert("You have register at leaest one Education details");
+      return;
+    }
+
     newList.splice(id, 1);
     setEducation(newList);
   };
