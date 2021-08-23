@@ -80,6 +80,10 @@
   box-shadow: 6px 7px 18px #bfb9b9;
 }
 
+.form-input-error {
+  border: 1px solid red;
+}
+
 .form-group {
   display: flex;
   align-items: center;
