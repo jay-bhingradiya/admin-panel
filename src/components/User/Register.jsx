@@ -4,8 +4,7 @@ import FormInput from "../Input/FormInput";
 
 const Register = () => {
   const adminCtx = useContext(AdminContext);
-  const [showFirstPage, setShowFirstPage] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [showFirstPage, setShowFirstPage] = useState(true);
   const [errorList, setErrorList] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [activeNextBtn, setActiveNextBtn] = useState(false);
@@ -19,13 +18,6 @@ const Register = () => {
       endDate: "",
     },
   ]);
-
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  };
-
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -34,6 +26,12 @@ const Register = () => {
     phone: "",
     gender: "",
   });
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
 
   useEffect(() => {
     let emptyUserData = false;
@@ -276,27 +274,9 @@ const Register = () => {
     const formData = {
       ...userData,
       education,
+      id: Math.random(),
     };
 
-    let error = [];
-
-    formData.education.forEach((data, index) => {
-      for (let [key, value] of Object.entries(data)) {
-        if (value === "") {
-          error.push(`Please fill data in education-${index + 1}`);
-          break;
-        }
-      }
-    });
-
-    if (error.length) {
-      console.log(error);
-      setErrors(error);
-      setTimeout(() => setErrors([]), 3000);
-      return;
-    }
-
-    formData["id"] = Math.random();
     adminCtx.register(formData);
   };
 
@@ -304,7 +284,6 @@ const Register = () => {
     <Fragment>
       <div className="register-backdrop">
         <div className="register">
-          <h1>{isSubmit ? "True" : "False"}</h1>
           <form className="register-form">
             <div className="page-1" style={userDetails}>
               <FormInput
@@ -441,7 +420,6 @@ const Register = () => {
                 ))}
             </div>
           </form>
-
           <div className="buttons">
             {showFirstPage ? (
               <button
