@@ -10,11 +10,19 @@ const EducationModal = ({ data, onSubmitModal, onClose }) => {
     endDate: data.endDate,
   });
 
-  const onEducationChange = (e) =>
+  const onEducationChange = (e) => {
+    if (e.target.name === "marks") {
+      if (e.target.value > 100 || e.target.value < 0) {
+        alert("enter valid percentage");
+        return;
+      }
+    }
+
     setEduData({
       ...eduData,
       [e.target.name]: e.target.value,
     });
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -27,7 +35,7 @@ const EducationModal = ({ data, onSubmitModal, onClose }) => {
       startDate === "" ||
       endDate === ""
     ) {
-      alert("enter institure");
+      alert("Please fill all the field");
       return;
     }
     onSubmitModal(eduData);

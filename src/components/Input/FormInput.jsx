@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
+import { CSSTransition } from "react-transition-group";
 
 const FormInput = (props) => {
   const {
@@ -16,8 +17,18 @@ const FormInput = (props) => {
     ...rest
   } = props;
 
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setHasError(true);
+    } else {
+      setHasError(false);
+    }
+  }, [error]);
+
   return (
-    <Fragment>
+    <div>
       <div className="form-group">
         <label htmlFor={id}>{label}</label>
         <input
@@ -32,9 +43,19 @@ const FormInput = (props) => {
           style={error ? { border: "1px solid red" } : {}}
           {...rest}
         />
-        {error && <small style={{ color: "red" }}>{error}</small>}
+
+        <CSSTransition
+          in={hasError}
+          timeout={500}
+          classNames="my-element"
+          unmountOnExit
+          // onEnter={() => setHasError(false)}
+          // onExited={() => setHasError(false)}
+        >
+          <small style={{ color: "red" }}>{error}</small>
+        </CSSTransition>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
