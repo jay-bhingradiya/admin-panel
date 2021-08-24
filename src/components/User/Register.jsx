@@ -91,7 +91,6 @@ const Register = () => {
 
     const currentName = e.target.name;
     const currentValue = e.target.value;
-
     let tempErr = {};
 
     if (currentName === "name") {
